@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Bond Ecosystem</title>
+
+  <!-- Optional Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Open+Sans&display=swap" 
+    rel="stylesheet"
+  >
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #fff;
+      background: #000; /* fallback color */
+      overflow-x: hidden; /* prevent horizontal scroll on animations */
+      position: relative;
+    }
+
+    /*
+      1) Bond Background (fixed, behind everything)
+    */
+    .bond-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        url('bond-background.jpg') 
+        center center / cover 
+        no-repeat;
+      z-index: -3; 
+    }
+
+    /*
+      2) Swirling Code:
+         Make it huge so it spans beyond the visible screen,
+         creating a large swirling effect from edge to edge.
+    */
+    .code-swirl {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      /* Make the swirl container massive */
+      width: 2000px;
+      height: 2000px;
+      /* Center it by shifting half its width/height */
+      margin-left: -1000px;
+      margin-top: -1000px;
+      z-index: -2; 
+      animation: swirl 40s linear infinite; 
+      transform-origin: center;
+    }
+    @keyframes swirl {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* 
+       Each code-line is placed on the swirl at a unique angle and radius. 
+       Adjust angles, text, etc., to create an even more chaotic effect.
+    */
+    .code-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: left center; 
+      color: #feda00;       /* Bond gold color */
+      font-family: monospace;
+      font-size: 0.85rem;
+      opacity: 0.85; 
+      white-space: nowrap;  /* Keep each line on one line */
+    }
+
+    /* Example: We create a bunch of lines at different angles and distances. */
+    .line1  { transform: translate(-50%, -50%) rotate(0deg)    translateX(600px) rotate(-0deg);   }
+    .line2  { transform: translate(-50%, -50%) rotate(22.5deg) translateX(550px) rotate(-22.5deg);}
+    .line3  { transform: translate(-50%, -50%) rotate(45deg)   translateX(500px) rotate(-45deg);  }
+    .line4  { transform: translate(-50%, -50%) rotate(67.5deg) translateX(610px) rotate(-67.5deg);}
+    .line5  { transform: translate(-50%, -50%) rotate(90deg)   translateX(540px) rotate(-90deg);  }
+    .line6  { transform: translate(-50%, -50%) rotate(112.5deg)translateX(590px) rotate(-112.5deg);}
+    .line7  { transform: translate(-50%, -50%) rotate(135deg)  translateX(580px) rotate(-135deg); }
+    .line8  { transform: translate(-50%, -50%) rotate(157.5deg)translateX(610px) rotate(-157.5deg);}
+    .line9  { transform: translate(-50%, -50%) rotate(180deg)  translateX(530px) rotate(-180deg); }
+    .line10 { transform: translate(-50%, -50%) rotate(202.5deg)translateX(600px) rotate(-202.5deg);}
+    .line11 { transform: translate(-50%, -50%) rotate(225deg)  translateX(560px) rotate(-225deg); }
+    .line12 { transform: translate(-50%, -50%) rotate(247.5deg)translateX(510px) rotate(-247.5deg);}
+    .line13 { transform: translate(-50%, -50%) rotate(270deg)  translateX(620px) rotate(-270deg); }
+    .line14 { transform: translate(-50%, -50%) rotate(292.5deg)translateX(550px) rotate(-292.5deg);}
+    .line15 { transform: translate(-50%, -50%) rotate(315deg)  translateX(570px) rotate(-315deg); }
+    .line16 { transform: translate(-50%, -50%) rotate(337.5deg)translateX(610px) rotate(-337.5deg); }
+
+    /* Insert "crazy" suspicious code lines here. Feel free to add or modify. */
+    /* Tip: You can copy/paste more lines to have 20, 30, etc. */
+    
+    /*
+      3) Dark Overlay
+      Ensures the swirl doesn't dominate the text (for readability).
+    */
+    .overlay {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: -1; /* behind content, above swirl */
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px; 
+      position: relative;
+      z-index: 1; 
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #feda00; /* Bond gold */
+    }
+    .hero p {
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #ccc;
+    }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .hero-button {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      padding: 12px 24px;
+      color: #fff;
+      background-color: transparent;
+      border: 2px solid #feda00;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .hero-button:hover {
+      background-color: #feda00;
+      color: #000;
+    }
+
+    /* Live Agents Section */
+    .live-agents-section {
+      padding: 40px 20px 80px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .live-agents-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      margin-bottom: 40px;
+      color: #feda00;
+    }
+
+    /* Card Styles */
+    .agent-card-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .agent-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 2px solid #feda00;
+      border-radius: 8px;
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+    .agent-card:hover {
+      transform: scale(1.05);
+    }
+    .agent-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 2px solid #feda00;
+    }
+    .agent-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #feda00;
+    }
+    .agent-card p {
+      color: #ccc;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .agent-card a {
+      display: inline-block;
+      text-decoration: none;
+      color: #000;
+      background-color: #feda00;
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .agent-card a:hover {
+      background-color: #fffa86;
+      color: #000;
+    }
+
+    /* Footer (optional) */
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      background: #000;
+      color: #666;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bond Background -->
+  <div class="bond-background"></div>
+
+  <!-- Giant Swirl of Code -->
+  <div class="code-swirl">
+    <div class="code-line line1">let classified = true;</div>
+    <div class="code-line line2">function deployBondAgent() &#123;</div>
+    <div class="code-line line3">  if (classified) &#123; console.warn("TOP SECRET"); &#125;</div>
+    <div class="code-line line4">&#125; // end deployBondAgent</div>
+    <div class="code-line line5"># Rendezvous with M at midnight</div>
+    <div class="code-line line6">console.log("Shaken, not stirred.");</div>
+    <div class="code-line line7">await sabotageEnemyHQ("GoldenEye");</div>
+    <div class="code-line line8">QBranch.upgrade(AstonMartin);</div>
+    <div class="code-line line9">if (danger &gt; threshold) &#123; backupCall(); &#125;</div>
+    <div class="code-line line10">spyNetwork.init("Bond Ecosystem");</div>
+    <div class="code-line line11">secretPayload.encode("License to kill");</div>
+    <div class="code-line line12">for(let i=0; i&lt;7; i++) &#123; gatherIntel(i); &#125;</div>
+    <div class="code-line line13"># TODO: Infiltrate next mission facility</div>
+    <div class="code-line line14">try &#123; hackSystem(); &#125; catch(e) &#123; reportToMI6(e); &#125;</div>
+    <div class="code-line line15">console.info("Bond agent has entered the building.");</div>
+    <div class="code-line line16">Agent007.executeMission("SkyFall");</div>
+  </div>
+
+  <!-- Dark Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>The Bond Ecosystem</h1>
+    <p>
+      The Bond Ecosystem Agent Framework is an experimental AI agent swarms framework 
+      that aims to implement multiple spy agents to perform various tasks. 
+      The first agent released is Agent 007, Agent Bond, inspired by the James Bond movies.
+    </p>
+    <div class="button-group">
+      <a href="#" target="_blank" class="hero-button">View GitHub</a>
+      <a href="https://x.com/ai_agent_007_" target="_blank" class="hero-button">View X</a>
+      <a href="#" target="_blank" class="hero-button">Join Telegram</a>
+    </div>
+  </section>
+
+  <!-- Live Agents Section -->
+  <section class="live-agents-section">
+    <h2>Live Agents</h2>
+    <div class="agent-card-container">
+      <!-- Single Card -->
+      <div class="agent-card">
+        <img 
+          src="https://pbs.twimg.com/profile_images/1875293011967418368/Vl6M0xif_400x400.jpg" 
+          alt="Bond-Themed Agent"
+        />
+        <h3>Agent 007</h3>
+        <p>
+          The epitome of style and suspense. 
+          License to thrill. Ready for any mission.
+        </p>
+        <a href="#" target="_blank" >View on Pump Fun</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (optional) -->
+  <footer>
+    &copy; 2025 The Bond Ecosystem. All rights reserved.
+  </footer>
+</body>
+</html>
